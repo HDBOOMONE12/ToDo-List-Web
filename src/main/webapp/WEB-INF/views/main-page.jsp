@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -20,17 +21,20 @@
         </div>
 
         <div class="filter-container">
-            <form class="filter-form">
+            <form action="/home" method="get" class="filter-form">
                 <div class="filter-form__input">
-                    <input type="radio" id="filter-form__status_all" name="filter" value="all" checked>
+                    <input type="radio" id="filter-form__status_all" name="filter"
+                           value="all" ${empty param.filter or (fn:toLowerCase(param.filter) != 'done' and fn:toLowerCase(param.filter) != 'active') ? 'checked' : ''}>
                     <label for="filter-form__status_all">All</label>
                 </div>
                 <div class="filter-form__input">
-                    <input type="radio" id="filter-form__status_active" name="filter" value="active">
+                    <input type="radio" id="filter-form__status_active" name="filter"
+                           value="active" ${fn:toLowerCase(param.filter) == 'active' ? 'checked' : ''}>
                     <label for="filter-form__status_active">Active</label>
                 </div>
                 <div class="filter-form__input">
-                    <input type="radio" id="filter-form__status_done" name="filter" value="done">
+                    <input type="radio" id="filter-form__status_done" name="filter"
+                           value="done" ${fn:toLowerCase(param.filter) == 'done' ? 'checked' : ''}>
                     <label for="filter-form__status_done">Done</label>
                 </div>
                 <button type="submit">Apply</button>
@@ -79,7 +83,7 @@
                 </c:when>
                 <c:otherwise>
                     <div class="hint">
-                       <span> There are no tasks!</span>
+                        <span> There are no tasks!</span>
                     </div>
                 </c:otherwise>
             </c:choose>
