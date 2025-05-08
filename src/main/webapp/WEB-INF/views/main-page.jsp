@@ -54,6 +54,7 @@
                                 <c:if test="${record.status == 'ACTIVE'}">
                                     <form action="/make-record-done" method="post" class="record__controls-form">
                                         <input type="hidden" name="id" value="${record.id}">
+                                        <input type="hidden" name="filter" value="${fn:toLowerCase(param.filter)}">
                                         <button type="submit" class="button_type_approve">
                                             <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
                                                  xmlns="http://www.w3.org/2000/svg">
@@ -71,6 +72,7 @@
                                 </c:if>
                                 <form action="/delete-record" method="post" class="record__controls-form">
                                     <input type="hidden" name="id" value="${record.id}">
+                                    <input type="hidden" name="filter" value="${fn:toLowerCase(param.filter)}">
                                     <button type="submit" class="button_type_close">
                                         <svg width="24" height="24" viewBox="0 0 24 24">
                                             <path d="M12.071 13.485l-2.828 2.829-1.415-1.415 2.829-2.828-2.829-2.828 1.415-1.415 2.828 2.829L14.9 7.828l1.707 1.707-2.536 2.536z"/>
