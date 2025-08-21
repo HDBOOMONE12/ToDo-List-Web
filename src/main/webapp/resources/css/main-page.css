@@ -39,10 +39,10 @@ button:hover {
     background-color: #efeff0;
 }
 
-/* === Зелёная кнопка “approve” с галочкой по центру === */
+
 .button_type_approve {
-    /* сохраним существующий padding и border-radius */
-    position: relative;       /* чтобы псевдоэлемент центрировался */
+    
+    position: relative;       
     background-color: #79C672;
 }
 
@@ -50,21 +50,21 @@ button:hover {
     background-color: #6dab67;
 }
 
-/* прячем исходный SVG, чтобы не мешал */
+
 .button_type_approve svg {
     display: none;
 }
 
-/* вставляем галочку по центру */
+
 .button_type_approve::after {
-    content: '✓';             /* можно заменить на '\2713' */
+    content: '✓';             
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 16px;          /* подберите по вкусу */
+    font-size: 16px;          
     color: #fff;
-    pointer-events: none;     /* клики проходят на кнопку */
+    pointer-events: none;     
 }
 
 

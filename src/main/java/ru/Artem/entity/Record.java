@@ -1,36 +1,37 @@
 package ru.Artem.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-
+@Entity
+@Table(name = "records")
+@NoArgsConstructor
 public class Record {
-    private static int counterSequence = 0;
-    private final int id;
-    private final String Title;
-    private RecordStatus status;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name="title", nullable=false)
+    private String title;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable=false)
+    private RecordStatus status = RecordStatus.ACTIVE;
+
+    
     public Record(String title) {
-        this.id = counterSequence++;
-        this.Title = title;
+        this.title = title;
         this.status = RecordStatus.ACTIVE;
     }
 
-    public Record(String title, RecordStatus status) {
-        this.id = counterSequence++;
-        this.Title = title;
-        this.status = status;
-    }
-
+    
     public int getId() {
-        return id;
+        return id == null ? 0 : id;
     }
 
     public String getTitle() {
-
-        return Title;
+        return title;
     }
 
     public RecordStatus getStatus() {
@@ -40,5 +41,4 @@ public class Record {
     public void setStatus(RecordStatus status) {
         this.status = status;
     }
-
 }

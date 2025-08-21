@@ -47,13 +47,13 @@ public class CommonController {
     public String makeRecordDone(@RequestParam int id,
                                  @RequestParam(name = "filter", required = false) String filterMode) {
         recordService.updateRecordStatus(id, RecordStatus.DONE);
-        return "redirect:/home" + (filterMode != null && !filterMode.trim().isEmpty() ? "?filter=" + filterMode : ""); //TODO
+        return "redirect:/home" + (filterMode != null && !filterMode.trim().isEmpty() ? "?filter=" + filterMode : ""); 
     }
 
     @RequestMapping(value = "/delete-record", method = RequestMethod.POST)
     public String deleteRecord(@RequestParam int id
             , @RequestParam(name = "filter", required = false) String filterMode) {
         recordService.deleteRecordStatus(id);
-        return "redirect:/home" + (filterMode != null && !filterMode.trim().isEmpty() ? "?filter=" + filterMode : ""); //TODO
+        return "redirect:/home" + (filterMode != null && !filterMode.trim().isEmpty() ? "?filter=" + filterMode : ""); 
     }
 }

@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -84,9 +84,23 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <div class="hint">
-                        <span> There are no tasks!</span>
-                    </div>
+                    <c:choose>
+                        <c:when test="${fn:toLowerCase(param.filter)=='active'}">
+                            <div class="hint">
+                                <span> There are no active tasks!</span>
+                            </div>
+                        </c:when>
+                        <c:when test="${fn:toLowerCase(param.filter)=='done'}">
+                            <div class="hint">
+                                <span> There are no done tasks!</span>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="hint">
+                                <span> There are no tasks at all, try to add new one!</span>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </c:otherwise>
             </c:choose>
 

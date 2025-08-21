@@ -6,7 +6,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.*;
+import jakarta.servlet.*;
 import java.util.EnumSet;
 
 public class ApplicationInitializer implements WebApplicationInitializer {
@@ -14,19 +14,19 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) {
-        // 1) Регистрируем фильтр кодировки
+        
         CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
         encodingFilter.setEncoding("UTF-8");
         encodingFilter.setForceEncoding(true);
         FilterRegistration.Dynamic fr = servletContext.addFilter("encodingFilter", encodingFilter);
         fr.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), false, "/*");
 
-        // 2) Создаём контекст Spring и слушатель для него
+        
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(WebConfig.class);
+        context.register(WebConfig.class, PersistenceConfig.class);
         servletContext.addListener(new ContextLoaderListener(context));
 
-        // 3) Регистрируем DispatcherServlet на корень
+        
         ServletRegistration.Dynamic servlet =
                 servletContext.addServlet(DISPATCHER, new DispatcherServlet(context));
         servlet.setLoadOnStartup(1);

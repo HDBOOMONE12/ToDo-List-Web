@@ -1,42 +1,53 @@
 package ru.Artem.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.Artem.entity.Record;
 import ru.Artem.entity.RecordStatus;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class RecordDao {
-    private final List<Record> records = new ArrayList<>(
-            Arrays.asList(
-                    new Record("Take a shower", RecordStatus.ACTIVE),
-                    new Record("Buy flowers", RecordStatus.DONE),
-                    new Record("Go to", RecordStatus.ACTIVE)
 
-            )
-    );
+    @PersistenceContext
+    private EntityManager em;
+
+    public List<Record> getRecords() {
+        return em.createQuery("select r from Record r order by r.id", Record.class)
+                 .getResultList();
+    }
 
     public List<Record> findAllRecords() {
-        return new ArrayList<>(records);
+        return getRecords();
     }
 
-    public void saveRecord(Record record){
-        records.add(record);
+    public List<Record> getRecordsByStatus(RecordStatus status) {
+        return em.createQuery("select r from Record r where r.status = :st order by r.id", Record.class)
+                 .setParameter("st", status)
+                 .getResultList();
     }
 
+    @Transactional
+    public void saveRecord(Record record) {
+        em.persist(record);
+    }
+
+    @Transactional
     public void updateRecordStatus(int id, RecordStatus newStatus){
-        for (Record record : records) {
-            if(record.getId() == id){
-                record.setStatus(newStatus);
-                break;
-            }
+        Record r = em.find(Record.class, id);
+        if (r != null) {
+            r.setStatus(newStatus);
         }
     }
+
+    @Transactional
     public void deleteRecord(int id){
-        records.removeIf(record -> record.getId() == id );
+        Record r = em.find(Record.class, id);
+        if (r != null) {
+            em.remove(r);
+        }
     }
 }
-
