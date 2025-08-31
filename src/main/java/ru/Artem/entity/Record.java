@@ -1,11 +1,9 @@
 package ru.Artem.entity;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "records")
-@NoArgsConstructor
 public class Record {
 
     @Id
@@ -19,6 +17,9 @@ public class Record {
     @Column(nullable=false)
     private RecordStatus status = RecordStatus.ACTIVE;
 
+    // Default constructor for JPA
+    public Record() {
+    }
     
     public Record(String title) {
         this.title = title;

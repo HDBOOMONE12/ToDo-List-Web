@@ -45,7 +45,7 @@ public class RecordService {
     }
 
     public void saveRecord(String title) {
-        if (title != null && !title.isEmpty()) {
+        if (title != null && !title.trim().isEmpty()) {
             recordDao.saveRecord(new Record(title));
         }
 
